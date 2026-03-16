@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>老姚 · 生日快乐</title>
+    <style>
+        /* ========== 合并后的 styles.css 内容 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #87CEEB, #1E90FF);
+            overflow: hidden;
+        }
+
+        /* Birthday Page Styles (直接作为主页面) */
+        .birthday-body {
+            background: linear-gradient(135deg, #87CEEB, #1E90FF);
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .birthday-container {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #greeting {
+            color: white;
+            font-size: 3rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        .cake-container {
+            margin: 2rem auto;
+            width: 380px;
+            height: 380px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cake-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            animation: cakeBounce 2s infinite alternate ease-in-out;
+            border-radius: 20px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+        }
+
+        /* 如果没有真实图片，使用emoji蛋糕作为后备 */
+        .cake-emoji-fallback {
+            font-size: 15rem;
+            line-height: 1;
+            filter: drop-shadow(0 20px 15px rgba(0,0,0,0.2));
+            animation: cakeBounce 2s infinite alternate ease-in-out;
+        }
+
+        @keyframes cakeBounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        .message-container {
+            color: white;
+            margin: 2rem 0;
+            font-size: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+            transition: opacity 1s ease-in-out;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+
+        #birthday-message {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .extended-wishes {
+            line-height: 1.8;
+        }
+
+        .extended-wishes p {
+            margin: 0.5rem 0;
+        }
+
+        .signature {
+            margin-top: 1.5rem;
+            font-style: italic;
+            text-align: right;
+        }
+
+        #play-music {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        #play-music:hover {
+            transform: scale(1.05);
+            background-color: #ff5252;
+        }
+
+        /* Balloons */
+        .balloons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 65px;
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        .balloon::before {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.7);
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .balloon-1 {
+            background: rgba(255, 99, 132, 0.7);
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .balloon-2 {
+            background: rgba(54, 162, 235, 0.7);
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .balloon-3 {
+            background: rgba(255, 206, 86, 0.7);
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        .balloon-4 {
+            background: rgba(75, 192, 192, 0.7);
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        .balloon-5 {
+            background: rgba(153, 102, 255, 0.7);
+            left: 90%;
+            animation-delay: 8s;
+        }
+
+        /* Confetti */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 6;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        @keyframes cakeBounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            #greeting { font-size: 2rem; }
+            .cake-container { width: 280px; height: 280px; }
+            .cake-emoji-fallback { font-size: 10rem; }
+        }
+    </style>
+</head>
+<body class="birthday-body">
+    <div class="birthday-container">
+        <h1 id="greeting">老姚，生日快乐！</h1>
+        <div class="cake-container">
+            <!-- 使用本地蛋糕图片 -->
+            <img src="file:///C:/Users/ASUS/Desktop/cake.png" 
+                 alt="生日蛋糕" 
+                 class="cake-image"
+                 onerror="this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='<div class=\'cake-emoji-fallback\'>🎂</div>';">
+        </div>
+        <button id="play-music">奏响生日快乐歌</button>
+        <div class="message-container" id="message-container" style="display: none;">
+            <p id="birthday-message">老姚，祝你生日快乐，年年有今日，岁岁有今朝！</p>
+            <div class="extended-wishes">
+                <p>老友华诞，遥寄心语。</p>
+                <p>愿君福寿双全，身体硬朗，</p>
+                <p>阖家幸福，万事顺心。</p>
+                <p class="signature">——永远祝福你的朋友</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 音频元素：使用本地音频文件 -->
+    <audio id="birthday-song" loop preload="auto">
+        <source src="file:///C:/Users/ASUS/Downloads/生日快乐歌 (经典版)-库库小队.mp3" type="audio/mpeg">
+        <!-- 如果本地文件无法加载，提供一个网络备用地址 -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放。
+    </audio>
+
+    <!-- 气球装饰 -->
+    <div class="balloons">
+        <div class="balloon balloon-1"></div>
+        <div class="balloon balloon-2"></div>
+        <div class="balloon balloon-3"></div>
+        <div class="balloon balloon-4"></div>
+        <div class="balloon balloon-5"></div>
+    </div>
+    <div class="confetti-container" id="confetti-container"></div>
+
+    <script>
+        (function() {
+            // ========== 合并 birthday.js 和 增强功能 ==========
+            const greeting = document.getElementById('greeting');
+            const birthdayMessage = document.getElementById('birthday-message');
+            const playMusicBtn = document.getElementById('play-music');
+            const birthdaySong = document.getElementById('birthday-song');
+            const messageContainer = document.getElementById('message-container');
+            
+            // 固定寿星名字为 小泉
+            const username = '老姚';
+            
+            // 设置个性化祝福
+            greeting.textContent = `${username}，生日快乐！`;
+            birthdayMessage.textContent = `${username}，祝你生日快乐，年年有今日，岁岁有今朝！`;
+            
+            // 初始隐藏祝福文本
+            messageContainer.style.display = 'none';
+            
+            // 预加载音频
+            birthdaySong.load();
+            
+            // 音乐按钮点击事件
+            playMusicBtn.addEventListener('click', function() {
+                if (birthdaySong.paused) {
+                    // 尝试播放本地音频
+                    birthdaySong.play().then(() => {
+                        playMusicBtn.textContent = '暂停生日快乐歌';
+                    }).catch(e => {
+                        console.log('播放失败:', e);
+                        // 如果本地文件无法访问，提示用户
+                        alert('无法播放本地音频文件，请确保文件路径正确。\n将尝试使用备用网络音频。');
+                        
+                        // 尝试切换到备用音频（已在audio中配置第二个source）
+                        birthdaySong.load(); // 重新加载，会尝试第二个source
+                        birthdaySong.play().then(() => {
+                            playMusicBtn.textContent = '暂停生日快乐歌';
+                        }).catch(err => {
+                            alert('备用音频也无法播放，请检查浏览器设置。');
+                        });
+                    });
+                } else {
+                    birthdaySong.pause();
+                    playMusicBtn.textContent = '奏响生日快乐歌';
+                }
+                
+                // 显示祝福文本，添加淡入效果
+                if (messageContainer.style.display === 'none') {
+                    messageContainer.style.display = 'block';
+                    messageContainer.style.opacity = '0';
+                    
+                    // 淡入动画
+                    let opacity = 0;
+                    const fadeIn = setInterval(() => {
+                        opacity += 0.1;
+                        messageContainer.style.opacity = opacity;
+                        if (opacity >= 1) {
+                            clearInterval(fadeIn);
+                        }
+                    }, 100);
+                }
+            });
+            
+            // 创建彩纸屑 confetti
+            createConfetti();
+            
+            // 彩纸屑函数
+            function createConfetti() {
+                const confettiContainer = document.getElementById('confetti-container');
+                const colors = ['#ff5252', '#ffeb3b', '#2196f3', '#4caf50', '#9c27b0'];
+                
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 10 + 5 + 'px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.position = 'absolute';
+                    confetti.style.top = '-50px';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                    confetti.style.opacity = Math.random() + 0.5;
+                    
+                    // 动画
+                    confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear infinite`;
+                    confetti.style.animationDelay = Math.random() * 5 + 's';
+                    
+                    confettiContainer.appendChild(confetti);
+                }
+            }
+
+            // 添加fall动画style（确保存在）
+            if (!document.querySelector('#confetti-style')) {
+                const style = document.createElement('style');
+                style.id = 'confetti-style';
+                style.textContent = `
+                @keyframes fall {
+                    0% { transform: translateY(-50px) rotate(0deg); }
+                    100% { transform: translateY(100vh) rotate(360deg); }
+                }`;
+                document.head.appendChild(style);
+            }
+
+            // 当页面隐藏时暂停音乐，优化资源
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden && !birthdaySong.paused) {
+                    birthdaySong.pause();
+                    playMusicBtn.textContent = '奏响生日快乐歌';
+                }
+            });
+
+            // 音频加载错误提示
+            birthdaySong.addEventListener('error', function() {
+                console.warn('音频加载失败，请检查文件路径或网络');
+                const tip = document.createElement('div');
+                tip.style.backgroundColor = 'rgba(255,255,255,0.3)';
+                tip.style.borderRadius = '20px';
+                tip.style.padding = '10px';
+                tip.style.marginTop = '10px';
+                tip.style.color = 'white';
+                tip.style.fontSize = '0.9rem';
+                tip.innerHTML = '🎵 本地音频未找到，已启用备用网络音频';
+                document.querySelector('.birthday-container').appendChild(tip);
+            }, { once: true });
+
+            // 蛋糕图片加载错误提示
+            const cakeImg = document.querySelector('.cake-image');
+            cakeImg.addEventListener('error', function() {
+                console.warn('蛋糕图片加载失败，使用emoji替代');
+                // onerror已经处理了后备，这里只做提示
+                const tip = document.createElement('div');
+                tip.style.backgroundColor = 'rgba(255,255,255,0.3)';
+                tip.style.borderRadius = '20px';
+                tip.style.padding = '5px 15px';
+                tip.style.marginTop = '10px';
+                tip.style.color = 'white';
+                tip.style.fontSize = '0.9rem';
+                tip.innerHTML = '🍰 蛋糕图片未找到，使用emoji替代';
+                document.querySelector('.birthday-container').appendChild(tip);
+            }, { once: true });
+
+        })();
+    </script>
+</body>
+</html>
