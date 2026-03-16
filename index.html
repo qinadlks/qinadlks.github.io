@@ -240,7 +240,7 @@
         <h1 id="greeting">老姚，生日快乐！</h1>
         <div class="cake-container">
             <!-- 使用本地蛋糕图片 -->
-            <img src="file:///C:/Users/ASUS/Desktop/cake.png" 
+            <img src="cake.png" 
                  alt="生日蛋糕" 
                  class="cake-image"
                  onerror="this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='<div class=\'cake-emoji-fallback\'>🎂</div>';">
@@ -259,7 +259,7 @@
 
     <!-- 音频元素：使用本地音频文件 -->
     <audio id="birthday-song" loop preload="auto">
-        <source src="file:///C:/Users/ASUS/Downloads/生日快乐歌 (经典版)-库库小队.mp3" type="audio/mpeg">
+        <source src="生日快乐歌 (经典版)-库库小队.mp3" type="audio/mpeg">
         <!-- 如果本地文件无法加载，提供一个网络备用地址 -->
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
         您的浏览器不支持音频播放。
@@ -284,7 +284,7 @@
             const birthdaySong = document.getElementById('birthday-song');
             const messageContainer = document.getElementById('message-container');
             
-            // 固定寿星名字为 小泉
+            // 固定寿星名字为 老姚
             const username = '老姚';
             
             // 设置个性化祝福
